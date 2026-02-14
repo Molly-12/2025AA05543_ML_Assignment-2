@@ -26,25 +26,26 @@ the client subscribed to a term deposit (`yes` or `no`).
 
 c. Models used and their metrics
 
-| ML Model Name                | Accuracy | AUC    | Precision | Recall | F1     | MCC    |
-| ---------------------------- | -------- | ------ | --------- | ------ | ------ | ------ |
-| Logistic Regression          | 0.9164   | 0.9424 | 0.7100    | 0.4353 | 0.5397 | 0.5147 |
-| Decision Tree                | 0.8945   | 0.7411 | 0.5311    | 0.5431 | 0.5370 | 0.4775 |
-| kNN                          | 0.9022   | 0.8322 | 0.6178    | 0.3448 | 0.4426 | 0.4138 |
-| Naive Bayes                  | 0.7527   | 0.8493 | 0.2902    | 0.8265 | 0.4296 | 0.3860 |
-| Random Forest (Ensemble)     | 0.9175   | 0.9484 | 0.6824    | 0.5000 | 0.5771 | 0.5405 |
-| XGBoost (Ensemble)           | 0.9175   | 0.9496 | 0.6590    | 0.5539 | 0.6019 | 0.5588 |
+| ML Model Name            | Accuracy | AUC    | Precision | Recall | F1     | MCC    |
+| ------------------------ | -------- | ------ | --------- | ------ | ------ | ------ |
+| Logistic Regression      | 0.9162   | 0.9425 | 0.7095    | 0.4343 | 0.5388 | 0.5137 |
+| Decision Tree            | 0.8945   | 0.7411 | 0.5311    | 0.5431 | 0.5370 | 0.4775 |
+| kNN                      | 0.9035   | 0.8768 | 0.5982    | 0.4364 | 0.5047 | 0.4596 |
+| Naive Bayes              | 0.8440   | 0.8493 | 0.3839    | 0.6358 | 0.4787 | 0.4108 |
+| Random Forest (Ensemble) | 0.9175   | 0.9484 | 0.6824    | 0.5000 | 0.5771 | 0.5405 |
+| XGBoost (Ensemble)       | 0.9175   | 0.9496 | 0.6590    | 0.5539 | 0.6019 | 0.5588 |
+
 
 
 d. Observation of each model
 
-| ML Model Name            | Observation about Model Performance                                                                                                                     |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Logistic Regression      | Achieves high accuracy and AUC with good precision, but has moderate recall, indicating that some positive cases are missed.                            |
-| Decision Tree            | Models non-linear relationships effectively with balanced precision and recall, but shows lower generalization performance compared to ensemble models. |
-| kNN                      | Provides reasonable accuracy, but lower recall and F1 score indicate sensitivity to class imbalance and the choice of k value.                          |
-| Naive Bayes              | Exhibits very high recall with low precision, meaning it detects most positive cases but produces more false positives.                                 |
-| Random Forest (Ensemble) | Achieves high accuracy and AUC by combining multiple trees, reducing overfitting and improving robustness.                                              |
-| XGBoost (Ensemble)       | Best-performing model with the highest AUC, F1 score, and MCC, indicating excellent handling of complex patterns and class imbalance.                   |
+| ML Model Name            | Observation about Model Performance                                                                                                                         |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Logistic Regression      | Achieves high accuracy and strong AUC with good precision, but relatively lower recall, indicating that some positive cases are not detected.               |
+| Decision Tree            | Provides balanced precision and recall while capturing non-linear patterns, but overall performance is lower than ensemble models.                          |
+| kNN                      | Shows improved AUC compared to earlier results and moderate performance overall, but F1 score indicates sensitivity to class imbalance and feature scaling. |
+| Naive Bayes              | Demonstrates high recall but comparatively low precision, meaning it identifies many positives but produces more false positives.                           |
+| Random Forest (Ensemble) | Delivers strong accuracy and AUC by combining multiple trees, improving robustness and reducing overfitting.                                                |
+| XGBoost (Ensemble)       | Best-performing model with highest AUC, F1 score, and MCC, indicating superior ability to capture complex patterns and handle imbalance effectively.        |
 
 

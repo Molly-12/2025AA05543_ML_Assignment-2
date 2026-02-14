@@ -13,7 +13,7 @@ model_name = st.selectbox(
 uploaded_file = st.file_uploader("Upload Test CSV (with y column)", type="csv")
 
 if uploaded_file:
-    data = pd.read_csv(uploaded_file)
+    data = pd.read_csv(uploaded_file,  sep=";")
     y_true = data["y"]
     X = data.drop("y", axis=1)
 
@@ -25,3 +25,4 @@ if uploaded_file:
 
     st.text("Confusion Matrix")
     st.write(confusion_matrix(y_true, preds))
+

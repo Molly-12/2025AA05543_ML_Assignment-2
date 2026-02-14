@@ -1,31 +1,49 @@
 import pandas as pd
 import joblib
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score, roc_auc_score, precision_score, recall_score, f1_score, matthews_corrcoef
 
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import (
+    accuracy_score,
+    roc_auc_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    matthews_corrcoef
+)
+
+# ---------------------------------------------------
+# Load Dataset
+# ---------------------------------------------------
 df = pd.read_csv("data/bank-additional-full.csv", sep=";")
+
 df["y"] = df["y"].map({"yes": 1, "no": 0})
-df = pd.get_dummies(df, drop_first=True)
 
 X = df.drop("y", axis=1)
 y = df["y"]
 
+# ---------------------------------------------------
+# Train-test split (NO preprocessing here!)
+# ---------------------------------------------------
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, stratify=y, random_state=42
 )
 
-scaler = StandardScaler()
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
-
 models = [
-    "Logistic_Regression", "Decision_Tree", "kNN",
-    "Naive_Bayes", "Random_Forest", "XGBoost"
+    "Logistic_Regression",
+    "Decision_Tree",
+    "kNN",
+    "Naive_Bayes",
+    "Random_Forest",
+    "XGBoost"
 ]
 
+# ---------------------------------------------------
+# Evaluate models
+# ---------------------------------------------------
 for m in models:
+
     model = joblib.load(f"model/{m}.pkl")
+
     y_pred = model.predict(X_test)
     y_prob = model.predict_proba(X_test)[:, 1]
 
@@ -36,4 +54,4 @@ for m in models:
     print("Recall:", recall_score(y_test, y_pred))
     print("F1:", f1_score(y_test, y_pred))
     print("MCC:", matthews_corrcoef(y_test, y_pred))
-    print("-"*30)
+    print("-" * 40)

@@ -14,7 +14,7 @@ uploaded_file = st.file_uploader("Upload Test CSV (with y column)", type="csv")
 
 if uploaded_file:
     data = pd.read_csv(uploaded_file,  sep=";")
-   y_true = data["y"].map({"yes": 1, "no": 0})
+    y_true = data["y"].map({"yes": 1, "no": 0})
     X = data.drop("y", axis=1)
 
     model = joblib.load(f"model/{model_name}.pkl")
@@ -25,5 +25,6 @@ if uploaded_file:
 
     st.text("Confusion Matrix")
     st.write(confusion_matrix(y_true, preds))
+
 
 

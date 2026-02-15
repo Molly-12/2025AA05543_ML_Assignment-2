@@ -88,21 +88,62 @@ preds = model.predict(X_input)
 # ---------------------------------------------------------
 # Results
 # ---------------------------------------------------------
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    roc_auc_score,
+    matthews_corrcoef
+)
 
+# Calculate metrics
+accuracy = accuracy_score(y_true, preds)
+precision = precision_score(y_true, preds)
+recall = recall_score(y_true, preds)
+f1 = f1_score(y_true, preds)
+mcc = matthews_corrcoef(y_true, preds)
+
+# AUC (only if model supports probability)
+if hasattr(model, "predict_proba"):
+    probs = model.predict_proba(X_input)[:, 1]
+    auc = roc_auc_score(y_true, probs)
+else:
+    auc = None
+
+# ---------------------------------------------------------
+# Display Evaluation Metrics 
+# ---------------------------------------------------------
 st.markdown("---")
-st.subheader("📊 Classification Report")
+st.subheader("📊 Evaluation Metrics")
 
-# Convert classification report to dictionary
+col1, col2, col3 = st.columns(3)
+col1.metric("Accuracy", round(accuracy, 3))
+col2.metric("Precision", round(precision, 3))
+col3.metric("Recall", round(recall, 3))
+
+col4, col5, col6 = st.columns(3)
+col4.metric("F1 Score", round(f1, 3))
+col5.metric("MCC", round(mcc, 3))
+
+if auc is not None:
+    col6.metric("AUC", round(auc, 3))
+else:
+    col6.metric("AUC", "N/A")
+
+# ---------------------------------------------------------
+# Classification Report
+# ---------------------------------------------------------
+st.subheader("📋 Classification Report")
+
 report_dict = classification_report(y_true, preds, output_dict=True)
-report_df = pd.DataFrame(report_dict).transpose()
-
-# Round for cleaner look
-report_df = report_df.round(2)
+report_df = pd.DataFrame(report_dict).transpose().round(3)
 
 st.dataframe(report_df, use_container_width=True)
 
-st.markdown(" ")
-
+# ---------------------------------------------------------
+# Confusion Matrix
+# ---------------------------------------------------------
 st.subheader("📌 Confusion Matrix")
 
 cm = confusion_matrix(y_true, preds)
@@ -114,4 +155,3 @@ cm_df = pd.DataFrame(
 )
 
 st.dataframe(cm_df, use_container_width=True)
-

@@ -33,7 +33,7 @@ default_test_df = X_test.copy()
 default_test_df["y"] = y_test
 
 # ---------------------------------------------------------
-# Download Button (Examiner Friendly)
+# Download Button 
 # ---------------------------------------------------------
 st.subheader("Download Test Dataset")
 
@@ -47,7 +47,7 @@ st.download_button(
 )
 
 # ---------------------------------------------------------
-# Upload Option (Optional Override)
+# Upload Option 
 # ---------------------------------------------------------
 st.subheader("Upload Test CSV (Optional)")
 
@@ -88,8 +88,30 @@ preds = model.predict(X_input)
 # ---------------------------------------------------------
 # Results
 # ---------------------------------------------------------
-st.subheader("Classification Report")
-st.text(classification_report(y_true, preds))
 
-st.subheader("Confusion Matrix")
-st.write(confusion_matrix(y_true, preds))
+st.markdown("---")
+st.subheader("📊 Classification Report")
+
+# Convert classification report to dictionary
+report_dict = classification_report(y_true, preds, output_dict=True)
+report_df = pd.DataFrame(report_dict).transpose()
+
+# Round for cleaner look
+report_df = report_df.round(2)
+
+st.dataframe(report_df, use_container_width=True)
+
+st.markdown(" ")
+
+st.subheader("📌 Confusion Matrix")
+
+cm = confusion_matrix(y_true, preds)
+
+cm_df = pd.DataFrame(
+    cm,
+    index=["Actual 0", "Actual 1"],
+    columns=["Predicted 0", "Predicted 1"]
+)
+
+st.dataframe(cm_df, use_container_width=True)
+
